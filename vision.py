@@ -6,9 +6,6 @@ import gzip
 import lasagne
 
 
-# import matplotlib.pyplot as plt
-
-
 def load_images(filename):
 
     with gzip.open(filename, 'rb') as f:
@@ -17,8 +14,6 @@ def load_images(filename):
     # following the shape convention: (examples, channels, rows, columns)
     data = data.reshape(-1, 1, 28, 28)
     # The inputs come as bytes, we convert them to float32 in range [0,1].
-    # (Actually to range [0, 255/256], for compatibility to the version
-    # provided at http://deeplearning.net/data/mnist/mnist.pkl.gz.)
     return data / np.float32(256)
 
 
@@ -96,7 +91,7 @@ updates = lasagne.updates.nesterov_momentum(
 train_fn = theano.function([input_var, target_var], loss, updates=updates)
 
 
-num_trainings = 100
+num_trainings = 10
 
 for step in range(num_trainings):
     print('current step is ' + str(step))
@@ -107,7 +102,6 @@ test_predicion = lasagne.layers.get_output(network)
 val_fn = theano.function([input_var], test_predicion)
 
 
-# Optionally, you could now dump the network weights to a file like this:
 np.savez('model.npz', *lasagne.layers.get_all_param_values(network))
 
 
