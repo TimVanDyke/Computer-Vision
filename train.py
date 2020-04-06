@@ -7,9 +7,9 @@ from load import load_data
 
 import lasagne
 
+print('\nLoading Datasets\n')
 
 train_images, train_labels, test_images, test_labels = load_data(sys.argv[1])
-
 
 input_var = T.tensor4('inputs')
 target_var = T.ivector('targets')
@@ -25,6 +25,7 @@ updates = lasagne.updates.nesterov_momentum(
 
 train_fn = theano.function([input_var, target_var], loss, updates=updates)
 
+print('Datasets Loaded, training is starting\n')
 
 num_trainings = int(sys.argv[3])
 
@@ -32,9 +33,8 @@ for step in range(num_trainings):
     print('current step is ' + str(step))
     train_err = train_fn(train_images, train_labels)
 
+
 # save the network
-np.savez('./networks/{}.npz'.format(sys.argv[2]), *lasagne.layers.get_all_param_values(network))
-
-
-
+np.savez('./networks/{}.npz'.format(sys.argv[2]),
+         *lasagne.layers.get_all_param_values(network))
 
