@@ -1,3 +1,3 @@
 # Computer-Vision
 
-added ```launch.json``` just push ```f5``` anywhere in the workspace folder (if using VS Code) to run/debug the vision.py file.
+Create a "datasets" folder in the directory and extraxt these datasets in it. https://drive.google.com/open?id=1pmsn73Wp7-R1CRfJsY08la7HZCceS_8o
