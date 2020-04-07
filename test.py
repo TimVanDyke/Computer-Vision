@@ -1,13 +1,13 @@
+import sys
 import numpy as np
 import theano
 import theano.tensor as T
 from nn import build_mlp
 from load import load_data
-import sys
 
 import lasagne
 
-train_images, train_labels, test_images, test_labels = load_data(sys.argv[1])
+train_images, train_labels, test_images, test_labels = load_data(sys.argv[1])    
 
 input_var = T.tensor4('inputs')
 target_var = T.ivector('targets')

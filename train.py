@@ -4,12 +4,26 @@ import theano.tensor as T
 import sys
 from nn import build_mlp
 from load import load_data
+from random import randint
 
 import lasagne
 
 print('\nLoading Datasets\n')
 
 train_images, train_labels, test_images, test_labels = load_data(sys.argv[1])
+
+
+len = int(len(train_images)//(4/3))
+offset = randint(0, len/2)
+new_images =[]
+new_labels = []
+print("New range is from {} to {}\n".format(offset, len+offset))
+for i in range(offset, len+offset):
+    new_images.append(train_images[i])
+    new_labels.append(train_labels[i])
+train_images = new_images
+train_labels = new_labels
+
 
 input_var = T.tensor4('inputs')
 target_var = T.ivector('targets')
@@ -25,6 +39,8 @@ updates = lasagne.updates.nesterov_momentum(
 
 train_fn = theano.function([input_var, target_var], loss, updates=updates)
 
+
+#Start training the nework, number of iterations is defined in args
 print('Datasets Loaded, training is starting\n')
 
 num_trainings = int(sys.argv[3])

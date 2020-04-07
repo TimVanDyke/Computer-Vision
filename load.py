@@ -1,6 +1,7 @@
 import numpy as np
 import gzip
 
+
 def load_data(dataset):
     def load_images(filename):
 
@@ -10,6 +11,7 @@ def load_data(dataset):
         # following the shape convention: (examples, channels, rows, columns)
         data = data.reshape(-1, 1, 28, 28)
         # The inputs come as bytes, we convert them to float32 in range [0,1].
+        # print(data[0] / np.float32(256))
         return data / np.float32(256)
 
     def load_labels(filename):
@@ -26,6 +28,5 @@ def load_data(dataset):
         './datasets/emnist-{}-test-labels-idx1-ubyte.gz'.format(dataset))   # Y
     test_images = load_images(
         './datasets/emnist-{}-test-images-idx3-ubyte.gz'.format(dataset))  # X
-
 
     return train_images, train_labels, test_images, test_labels
