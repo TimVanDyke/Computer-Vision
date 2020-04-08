@@ -11,21 +11,23 @@ import lasagne
 def letters_from_imgArr(dataset, netw, pictureArr):
     input_var = T.tensor4('inputs')
 
-    #build network schematic
+    # Build network schematic
     network = build_mlp(input_var)
 
-    # load trained network
+    # Load trained network
     with np.load('./networks/{}.npz'.format(netw)) as f:
         param_values = [f['arr_%d' % i] for i in range(len(f.files))]
     lasagne.layers.set_all_param_values(network, param_values)
 
-   
+   # This function uses the network to determine the character
     val_fn = theano.function(
         [input_var], lasagne.layers.get_output(network, deterministic=True))
 
-    #iterate through picutres in the arry and use the network to find the letter
+    letters = []
+    # Iterate through picutres in the arry and use the network to find the letter
     for i in range(len(pictureArr)):
         output = val_fn([pictureArr[i]])
         max = np.argmax(output[0])
-        print("\n     " + get_char(max))
+        letters.append(get_char(max))
+    return letters    
 

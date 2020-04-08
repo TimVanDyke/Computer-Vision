@@ -4,6 +4,7 @@ import theano
 import theano.tensor as T
 from nn import build_mlp
 from load import load_data
+from dataset import get_char
 
 import lasagne
 
@@ -32,7 +33,7 @@ for i in range(num_tests):
     max = np.argmax(output[0])
     if max == test_labels[i]:
         correct += 1
-    print('Predicted : {}, actual: {}'.format(max, test_labels[i]))
+    print('Predicted : {}, actual: {}'.format(get_char(max), get_char(test_labels[i])))
 
 acc_for_tests = correct/num_tests * 100
 

@@ -8,16 +8,14 @@ def load_data(dataset):
         with gzip.open(filename, 'rb') as f:
             data = np.frombuffer(f.read(), np.uint8, offset=16)
         # The inputs are vectors now, we reshape them to monochrome 2D images,
-        # following the shape convention: (examples, channels, rows, columns)
         data = data.reshape(-1, 1, 28, 28)
         # The inputs come as bytes, we convert them to float32 in range [0,1].
-        # print(data[0] / np.float32(256))
         return data / np.float32(256)
 
     def load_labels(filename):
         with gzip.open(filename, 'rb') as f:
             data = np.frombuffer(f.read(), np.uint8, offset=8)
-        # The labels are vectors of integers now, that's exactly what we want.
+        # The labels are a list of integers integers
         return data
 
     train_labels = load_labels(
